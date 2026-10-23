@@ -39,6 +39,7 @@ import java.util.Map;
 import fr.paris.lutece.plugins.grubusiness.business.demand.DemandCategory;
 import fr.paris.lutece.plugins.grubusiness.business.demand.TemporaryStatus;
 import fr.paris.lutece.plugins.grubusiness.business.demand.DemandType;
+import fr.paris.lutece.plugins.grubusiness.business.demand.DemandTypeTag;
 import fr.paris.lutece.plugins.grubusiness.business.web.rs.DemandResult;
 import fr.paris.lutece.plugins.grubusiness.business.web.rs.NotificationResult;
 import fr.paris.lutece.plugins.grubusiness.service.notification.NotificationException;
@@ -252,6 +253,13 @@ public interface INotificationStoreTransportProvider
      * @throws NotificationException
      */
     void reassignNotifications(String oldCustomerId, String newCustomerId) throws NotificationException;
-    
+
+    /**
+     * Get all DemandTypeTag as a list
+     *
+     * @return list of all DemandTypeTag
+     * @throws NotificationException
+     */
+    List<DemandTypeTag> getDemandTypeTagList() throws NotificationException;
 
 }

@@ -37,6 +37,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import fr.paris.lutece.plugins.grubusiness.business.demand.DemandTypeTag;
 import fr.paris.lutece.plugins.grubusiness.business.notification.ReassignNotificationsRequest;
 
 import org.apache.commons.lang3.StringUtils;
@@ -680,6 +681,24 @@ public class NotificationStoreTransportRest extends AbstractTransportRest implem
             String json = NotificationStoreUtils.getMapper( ).writeValueAsString( request );
 
             _httpTransport.doPutJson( _strNotificationStoreEndPoint + NotificationStoreConstants.PATH_NOTIFICATION + NotificationStoreConstants.PATH_REASSIGN, json, new HashMap<>( ) );
+        }
+        catch( Exception e )
+        {
+            _logger.error( e );
+            throw new NotificationException( e.getMessage( ) );
+        }
+    }
+
+    @Override
+    public List<DemandTypeTag> getDemandTypeTagList() throws NotificationException
+    {
+        _logger.debug( "Get list of demand type tags" );
+
+        try
+        {
+            String strResponse = _httpTransport.doGet( _strNotificationStoreEndPoint + NotificationStoreConstants.PATH_DEMAND_TYPE_TAG_LIST, new HashMap<>( ), new HashMap<>( ) );
+
+            return NotificationStoreUtils.jsonToObject( getResult( strResponse ), new TypeReference<List<DemandTypeTag>>( ){} );
         }
         catch( Exception e )
         {

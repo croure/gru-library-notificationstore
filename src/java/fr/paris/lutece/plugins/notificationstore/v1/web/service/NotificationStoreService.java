@@ -38,6 +38,7 @@ import java.util.List;
 import java.util.Map;
 
 import fr.paris.lutece.plugins.grubusiness.business.demand.DemandCategory;
+import fr.paris.lutece.plugins.grubusiness.business.demand.DemandTypeTag;
 import fr.paris.lutece.plugins.grubusiness.business.demand.TemporaryStatus;
 import fr.paris.lutece.plugins.grubusiness.business.demand.DemandType;
 import fr.paris.lutece.plugins.grubusiness.business.web.rs.DemandResult;
@@ -57,9 +58,11 @@ public class NotificationStoreService extends AbstractCacheableService
     private static final String STATUS_LIST_KEY = "StatusListKey";
     private static final String CATEGORY_LIST_KEY = "CategoryListKey";
     private static final String DEMANDTYPE_LIST_KEY = "DemandTypeListKey";
+    private static final String DEMANDTYPETAG_LIST_KEY = "DemandTypeTagListKey";
     private static final String GENERICSTATUS_LIST_KEY = "GenericStatusListKey";
     private static boolean flushCategoryCache = false;
     private static boolean flushDemandTypeCache = false;
+    private static boolean flushDemandTypeTagCache = false;
     private static boolean flushStatusCache = false;
 
     /** transport provider */
@@ -454,6 +457,16 @@ public class NotificationStoreService extends AbstractCacheableService
     }
 
     /**
+     * Gets list of DemandTypeTag
+     * @return list of all DemandTypeTag
+     */
+    public List<DemandTypeTag> getDemandTypeTagList( )
+    {
+        final List<DemandTypeTag> list = checkDemandTypeTagCache();
+        return (list != null ? list : new ArrayList<>());
+    }
+
+    /**
      * check cache
      * re-init if necessary
      * 
@@ -508,6 +521,41 @@ public class NotificationStoreService extends AbstractCacheableService
 	}
 	
 	return null;
+    }
+
+    /**
+     * check cache for DemandTypeTag
+     * re-init if necessary
+     *
+     */
+    private List<DemandTypeTag> checkDemandTypeTagCache( )
+    {
+        if ( isCacheEnable() && !flushDemandTypeTagCache )
+        {
+            List<DemandTypeTag> listd = (List<DemandTypeTag>) getFromCache( DEMANDTYPETAG_LIST_KEY );
+            if ( listd != null )
+            {
+                return listd;
+            }
+        }
+
+        try
+        {
+            List<DemandTypeTag> listd = this._transportProvider.getDemandTypeTagList( );
+            if ( isCacheEnable( ) )
+            {
+                putInCache( DEMANDTYPETAG_LIST_KEY, listd );
+                flushDemandTypeCache = false;
+            }
+
+            return listd;
+        }
+        catch ( NotificationException e )
+        {
+            AppLogService.error ( "NotificationStore access problem", e );
+        }
+
+        return null;
     }
 
     /**

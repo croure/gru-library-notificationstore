@@ -29,6 +29,8 @@ public class NotificationStoreConstants
     public static final String PATH_STATUS = "status/";
     public static final String PATH_GENERIC_STATUS = PATH_STATUS + "genericStatus";
     public static final String PATH_DEMAND_TYPES = "demandType/";
+    public static final String PATH_DEMAND_TYPE_TAG = "demandTypeTag/";
+    public static final String PATH_DEMAND_TYPE_TAG_LIST = PATH_DEMAND_TYPE_TAG + "list";
 
     
     //QUERY PARAMETERS

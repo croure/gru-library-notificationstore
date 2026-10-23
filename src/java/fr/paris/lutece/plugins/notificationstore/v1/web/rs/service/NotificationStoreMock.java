@@ -37,6 +37,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import fr.paris.lutece.plugins.grubusiness.business.demand.DemandTypeTag;
 import org.apache.log4j.Logger;
 
 import fr.paris.lutece.plugins.grubusiness.business.customer.Customer;
@@ -346,6 +347,12 @@ public class NotificationStoreMock implements INotificationStoreTransportProvide
     public void reassignNotifications(String oldCustomerId, String newCustomerId) throws NotificationException
     {
     	// nothing
+    }
+
+    @Override
+    public List<DemandTypeTag> getDemandTypeTagList() throws NotificationException
+    {
+        return new ArrayList<>();
     }
 
 }
